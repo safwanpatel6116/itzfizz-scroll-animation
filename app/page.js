@@ -1,69 +1,167 @@
-import Image from "next/image";
+
+"use client";
+
+import { useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+import "./globals.css";
 
 export default function Home() {
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // Intro: headline and supporting text
+      gsap.from(".hero-intro", {
+        opacity: 0,
+        y: 28,
+        duration: 1,
+        stagger: 0.12,
+        ease: "power3.out",
+      });
+
+      // Metrics appear one by one
+      gsap.from(".metric", {
+        opacity: 0,
+        y: 24,
+        duration: 0.7,
+        stagger: 0.18,
+        delay: 0.25,
+        ease: "power2.out",
+      });
+
+      // The main visual responds to scrolling
+      const mobile = window.matchMedia(
+        "(max-width: 600px)"
+      ).matches;
+
+      gsap.to(".car-visual", {
+        x: mobile ? 35 : 150,
+        y: mobile ? -18 : -48,
+        scale: mobile ? 0.92 : 0.78,
+        rotation: -3,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".hero",
+          start: "top top",
+          end: "+=750",
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
+  const metrics = [
+    {
+      number: "85%",
+      label: "FASTER DIGITAL EXPERIENCES",
+    },
+    {
+      number: "90%",
+      label: "FOCUS ON PERFORMANCE",
+    },
+    {
+      number: "100%",
+      label: "BUILT WITH CREATIVITY",
+    },
+  ];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.js
-            </code>{" "}
-            file.
+    <main>
+      <section className="hero">
+        <nav className="navbar">
+          <a href="#home" className="brand">
+            itzfizz<span>.</span>
+          </a>
+
+          <span className="nav-label">
+            CREATIVE DIGITAL STUDIO
+          </span>
+
+          <a href="#contact" className="nav-link">
+            LET'S TALK ↗
+          </a>
+        </nav>
+
+        <div className="hero-content" id="home">
+          <p className="eyebrow hero-intro">
+            DESIGN / DEVELOPMENT / DIGITAL
+          </p>
+
+          <h1 className="hero-title hero-intro">
+            WELCOME
+            <br />
+            <span>ITZFIZZ</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          <p className="hero-description hero-intro">
+            We turn bold ideas into exceptional
+            digital experiences.
+          </p>
+
+          <div className="metrics">
+            {metrics.map((metric) => (
+              <div className="metric" key={metric.label}>
+                <h2>{metric.number}</h2>
+                <p>{metric.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="car-stage">
+            <img
+              className="car-visual"
+              src="/car.jpg"
+              alt="Sports car in a cinematic setting"
+            />
+          </div>
+
+          <p className="scroll-hint">
+            <span className="scroll-dot" />
+            SCROLL TO EXPLORE
+            <span>↓</span>
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        <span className="side-note">
+          DIGITAL EXPERIENCES — 2026
+        </span>
+      </section>
+
+      <section className="next-section" id="contact">
+        <p className="section-kicker">
+          CREATIVITY MEETS TECHNOLOGY
+        </p>
+
+        <h2>
+          Make an impact.
+          <br />
+          Move people.
+        </h2>
+
+        <p className="next-description">
+          Great digital experiences start with
+          thoughtful design and powerful technology.
+        </p>
+
+        <a className="contact-link" href="mailto:hello@itzfizz.com">
+          LET'S CREATE SOMETHING ↗
+        </a>
+      </section>
+
+      <footer className="footer">
+        <a href="#home" className="brand">
+          itzfizz<span>.</span>
+        </a>
+        <p>DESIGNED WITH PURPOSE.</p>
+        <a href="#home">BACK TO TOP ↑</a>
+      </footer>
+    </main>
   );
 }

@@ -1,26 +1,358 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #09090b;
+  --foreground: #f5f5f5;
+  --muted: #a1a1aa;
+  --accent: #c9ff63;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: auto;
 }
 
 body {
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 26px 6%;
+  background:
+    radial-gradient(
+      ellipse at 50% 80%,
+      #25252a 0%,
+      #111114 43%,
+      #080809 78%
+    );
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  position: relative;
+  z-index: 5;
+}
+
+.brand {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+}
+
+.brand span {
+  color: var(--accent);
+}
+
+.nav-label,
+.nav-link {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: #b4b4bd;
+}
+
+.nav-link {
+  border: 1px solid #45454b;
+  border-radius: 999px;
+  padding: 12px 15px;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.hero-content {
+  position: relative;
+  max-width: 1150px;
+  margin: 7vh auto 0;
+  text-align: center;
+}
+
+.eyebrow,
+.section-kicker {
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+}
+
+.hero-title {
+  margin: 24px 0 18px;
+  font-size: clamp(52px, 9vw, 112px);
+  line-height: 0.96;
+  font-weight: 800;
+  letter-spacing: -0.055em;
+}
+
+.hero-title span {
+  color: transparent;
+  -webkit-text-stroke: 1px #f5f5f5;
+}
+
+.hero-description {
+  max-width: 390px;
+  margin: 22px auto 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.metrics {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(24px, 7vw, 100px);
+  margin: 35px auto 0;
+  position: relative;
+  z-index: 2;
+}
+
+.metric {
+  flex: 0 1 170px;
+  min-width: 0;
+}
+
+.metric h2 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.metric p {
+  margin: 0 auto;
+  max-width: 155px;
+  color: #a1a1aa;
+  font-size: 9px;
+  line-height: 1.7;
+  letter-spacing: 0.13em;
+}
+
+.car-stage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin: -4px auto 0;
+}
+
+.car-visual {
+  display: block;
+  width: min(78%, 720px);
+  height: 250px;
+  margin: 0 auto;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 25px 30px #0009);
+  will-change: transform;
+}
+
+.scroll-hint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 0;
+  color: #a1a1aa;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+}
+
+.scroll-hint > span:last-child {
+  color: var(--accent);
+  font-size: 15px;
+}
+
+.scroll-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px #c9ff6370;
+}
+
+.side-note {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  writing-mode: vertical-rl;
+  color: #707078;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+}
+
+.next-section {
+  min-height: 85vh;
+  padding: 100px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #f1f0eb;
+  color: #101012;
+}
+
+.section-kicker {
+  color: #575a4a;
+}
+
+.next-section h2 {
+  margin: 20px 0;
+  font-size: clamp(42px, 8vw, 92px);
+  line-height: 1.02;
+  letter-spacing: -0.06em;
+}
+
+.next-description {
+  max-width: 420px;
+  color: #66666c;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.contact-link {
+  margin-top: 25px;
+  padding: 15px 22px;
+  border: 1px solid #202024;
+  border-radius: 999px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.contact-link:hover {
+  background: #101012;
+  color: white;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 25px 6%;
+  background: #09090b;
+}
+
+.footer p,
+.footer > a:last-child {
+  color: #92929a;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 20px 5%;
+  }
+
+  .nav-label {
+    display: none;
+  }
+
+  .brand {
+    font-size: 25px;
+  }
+
+  .nav-link {
+    font-size: 8px;
+    padding: 10px 12px;
+  }
+
+  .hero-content {
+    margin-top: 9vh;
+  }
+
+  .hero-title {
+    font-size: clamp(42px, 11vw, 66px);
+    letter-spacing: -0.045em;
+  }
+
+  .hero-description {
+    max-width: 290px;
+    font-size: 13px;
+  }
+
+  .metrics {
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .metric {
+    flex: 1 1 0;
+  }
+
+  .metric h2 {
+    font-size: clamp(24px, 7vw, 32px);
+  }
+
+  .metric p {
+    font-size: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .car-stage {
+    margin-top: 16px;
+  }
+
+  .car-visual {
+    width: 110%;
+    max-width: none;
+    height: 180px;
+    margin-left: -5%;
+  }
+
+  .scroll-hint {
+    margin-top: 10px;
+    font-size: 8px;
+  }
+
+  .side-note {
+    display: none;
+  }
+
+  .next-section {
+    min-height: 70vh;
+  }
+
+  .footer {
+    flex-wrap: wrap;
+  }
+
+  .footer p {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
 }
